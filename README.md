@@ -1,5 +1,10 @@
 # 🧱 Git & CI/CD Lab for QA
 
+[![CI](https://github.com/freakARJ/GitLabforQA/actions/workflows/ci.yml/badge.svg)](https://github.com/freakARJ/GitLabforQA/actions/workflows/ci.yml)
+![License: MIT](https://img.shields.io/badge/license-MIT-green)
+
+**Live site:** https://gitlab-for-qa.vercel.app/
+
 An interactive website that teaches complete beginners how Git, GitHub and GitHub Actions work in a real software team. No setup, no install, no command-line experience needed.
 
 I built this because most Git tutorials are written for developers. As a QA engineer you need a slightly different view: reviewing pull requests, catching bugs before they merge, and reading CI failures. So the lessons and games are built around that.
@@ -39,6 +44,11 @@ No frameworks, no build step, no npm packages, no external requests. Just open t
 ├── index.html   # page shell: loads the CSS and JS
 ├── style.css    # reset, Lego blocks, animations, utility classes
 ├── app.js       # data, state, rendering and events
+├── tests/smoke.spec.js        # Playwright end-to-end tests
+├── playwright.config.js
+├── package.json
+├── .github/workflows/
+│   ├── ci.yml                 # runs the tests on every push and PR
 └── README.md
 ```
 
@@ -51,6 +61,27 @@ No frameworks, no build step, no npm packages, no external requests. Just open t
 - **Pipeline:** one `pipe(step, failed)` function draws the CI/CD stages. It is reused in the CI/CD tab, in lesson 8 and in practice module 3.
 - **Puzzles:** each step stores its block label, plain-English description, hint, "too early" explanation and the fake terminal output. Dropping a block only snaps if it is the next expected step.
 
+## Tests & CI
+
+The site tests itself with [Playwright](https://playwright.dev). The suite in `tests/smoke.spec.js` covers:
+
+- the page loads with no JavaScript errors
+- practice games are locked until all lessons are visited
+- the Branch Lab: create a branch, commit, merge
+- the CI/CD tab: pipeline goes red/green, sample files display
+- a wrong puzzle order shows the friendly explanation
+- all three puzzles can be completed and the certificate appears
+
+GitHub Actions (`ci.yml`) runs these on every push and pull request to `main`. If a run fails, the Playwright HTML report and failure screenshots are uploaded as an artifact, the same workflow the CI/CD lesson teaches.
+
+Run the tests locally:
+
+```bash
+npm install
+npx playwright install chromium
+npm test
+```
+
 ## Run it locally
 
 Open `index.html` in any modern browser. Or serve the folder:
@@ -62,10 +93,7 @@ python3 -m http.server 8000
 
 ## Deploy
 
-Because it's static, it works on any static host:
-
-- **GitHub Pages:** push the files, then Settings → Pages → deploy from `main`
-- **Netlify / Cloudflare Pages:** drag and drop the folder
+The site is hosted on **Vercel** as a static site; no build command is needed.
 
 ## Customising
 

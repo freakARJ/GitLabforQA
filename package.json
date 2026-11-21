@@ -1,0 +1,13 @@
+{
+  "name": "git-lego-lab",
+  "version": "1.0.0",
+  "description": "Interactive Git & GitHub Actions trainer for beginner QA engineers",
+  "scripts": {
+    "start": "python3 -m http.server 4173",
+    "test": "playwright test"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.48.0"
+  }
+}
