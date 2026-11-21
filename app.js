@@ -188,7 +188,7 @@ function pPlay(){if(S.seen.size<L.length)return `<div class="rounded-2xl bg-slat
  <div id="drop" class="${S.shake?"shake":""} mt-1 min-h-[110px] rounded-xl border-2 border-dashed border-slate-600 p-3 space-y-1">${tw||'<span class="text-slate-500 text-sm">Drop or click blocks here…</span>'}</div>
  <div class="mt-3 rounded-lg border-l-4 ${col} bg-slate-900 p-3 text-sm">🧑‍🏫 <b>Mentor:</b> ${S.msg.x}</div>${ex}</section>
  <section><div class="rounded-xl bg-slate-900 border border-slate-700 p-3">${vis}</div><div id="term" class="mt-3 rounded-xl bg-black p-3 mono text-xs h-44 overflow-auto"><div class="text-slate-500">● terminal</div>${S.term[i].map(l=>`<div class="${l[0]=="$"?"text-emerald-300":/✘|Error/.test(l)?"text-rose-300":"text-slate-300"}">${esc(l)}</div>`).join("")||'<span class="text-slate-600">waiting…</span>'}</div></section></div>`}
-function modal(){return `<div data-a="close" class="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"><div class="bg-slate-900 border border-slate-600 rounded-2xl max-w-lg w-full p-4 max-h-full overflow-auto" onclick="event.stopPropagation()"><div class="flex justify-between mb-2"><b class="mono text-sm">test-failure-screenshot.png</b><button data-a="close">✕</button></div>
+function modal(){return `<div data-a="close" class="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"><div class="bg-slate-900 border border-slate-600 rounded-2xl max-w-lg w-full p-4 max-h-full overflow-auto"><div class="flex justify-between mb-2"><b class="mono text-sm">test-failure-screenshot.png</b><button data-a="close">✕</button></div>
  <div class="rounded-lg bg-white text-slate-800 p-4 text-sm"><div class="font-bold border-b pb-1 mb-3">🛒 Checkout</div>1 × Blue Sneakers — $59<div class="mt-3"><span class="inline-block px-4 py-2 rounded bg-slate-300 text-slate-500">Pay $59 (disabled)</span></div><div class="mt-3 p-2 rounded bg-red-100 text-red-700 text-xs">✘ Expected #pay-button to be enabled</div></div>
  <p class="text-sm mt-3 text-slate-300"><b>Why it matters:</b> a screenshot is proof. Attach it to your bug report with the test name, the log line <span class="mono text-rose-300">checkout.spec.js:18</span> and the run link, so developers see exactly what the robot saw.</p></div></div>`}
 /* ---------- RENDER ---------- */
@@ -202,6 +202,7 @@ function place(i,k){const m=M[i],p=S.pl[i];if(p.includes(k)||p.length==m.steps.l
  else{S.shake=true;S.msg={t:"err",x:"🤔 "+m.steps[k].e}}S.hint=false;render()}
 const A=document.getElementById("app");
 A.addEventListener("click",e=>{const el=e.target.closest("[data-a]");if(!el)return;const a=el.dataset.a,k=el.dataset.k,i=S.pm;
+ if(a=="close"&&el!==e.target&&!e.target.closest("button[data-a=close]"))return;
  if(a=="tab"){S.tab=k;S.modal=false}else if(a=="card")S.card+=+k;else if(a=="goto")S.card=+k;
  else if(a=="lab")lab(k,k=="branch"?document.getElementById("bn").value:k=="switch"?document.getElementById("sw").value:document.getElementById("mg")?.value);
  else if(a=="ci"){if(k=="next")S.ci.n=Math.min(5,S.ci.n+1);else if(k=="reset")S.ci.n=0;else S.ci.fail=el.checked}
